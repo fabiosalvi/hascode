@@ -1,8 +1,29 @@
-var input = "a";
-var arr = [1, 2, 3];
+function solution() {
+  var fs = require("fs");
 
-function solution(input, arr) {
-  console.log(input);
-  console.log(arr);
+  var lineByLineArray = fs
+    .readFileSync("a_example.txt", "utf8")
+    .toString()
+    .match(/^.+$/gm);
+
+  //console.log(lineByLineArray);
+
+  var horizontals = [],
+    verticals = [];
+  for (let i = 0; i < lineByLineArray.length; i++) {
+    singleLineInArrayForm = lineByLineArray[i].toString().split(" ");
+
+    if (singleLineInArrayForm[0] === "H") {
+      horizontals.push(lineByLineArray[i]);
+      //console.log(horizontals);
+    }
+
+    if (singleLineInArrayForm[0] === "V") {
+      verticals.push(lineByLineArray[i]);
+    }
+  }
+
+  console.log(horizontals);
+  console.log(verticals);
 }
-solution(input, arr);
+solution();
