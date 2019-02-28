@@ -1,8 +1,10 @@
+var _ = require("lodash");
+
 function solution() {
   var fs = require("fs");
 
   var lineByLineArray = fs
-    .readFileSync("a_example.txt", "utf8")
+    .readFileSync("e_shiny_selfies.txt", "utf8")
     .toString()
     .match(/^.+$/gm);
 
@@ -10,6 +12,7 @@ function solution() {
 
   var horizontals = [],
       verticals = [],
+      lines_count = 0,
       slideshows = '',
       output = '';
 
@@ -17,36 +20,46 @@ function solution() {
     singleLineInArrayForm = lineByLineArray[i].toString().split(" ");
 
     if (singleLineInArrayForm[0] === "H") {
-      horizontals.push(lineByLineArray[i]);
-      //console.log(horizontals);
-      slideshows += i-1+'\n'
+      let harr = [i-1, singleLineInArrayForm]
+      horizontals.push(_.flatten(harr));
     }
 
     if (singleLineInArrayForm[0] === "V") {
-      verticals.push(lineByLineArray[i]);
+      let varr = [i-1, singleLineInArrayForm]
+      verticals.push(_.flatten(varr));
     }
   }
+  let svert = _.shuffle(verticals)
 
-  verticals.forEach( function(val ,i){
+  svert.forEach( function(val ,i){
     console.log(val)
+    if(i % 2 == 1){
+      console.log("odd:"+val[0])
+      slideshows += val[0] + ' ' +svert[i-1][0] +'\n'
+      lines_count += 1
+    }else{
+      console.log("even:"+val[0])
+    }
   })
 
-  output = slideshows
+  _.shuffle(horizontals).forEach( function(val ,i){
+    slideshows += val[0]+'\n'
+    lines_count += 1
+  })
 
-  console.log('slides')
-  console.log(slideshows)
+  output = lines_count + '\n' + slideshows
 
+  console.log('---RESULT---')
+  console.log(output)
 
-
-
-  fs.writeFile("out_example.txt", output, function(err) {
+  fs.writeFile("out_example_e.txt", output, function(err) {
     if(err) {
         return console.log(err);
     }
     console.log("The file was saved!");
   });
 
-  console.log(horizontals);
-  console.log(verticals);
+  // console.log(horizontals);
+  // console.log(verticals);
 }
 solution();
