@@ -4,7 +4,7 @@ function solution() {
   var fs = require("fs");
 
   var lineByLineArray = fs
-    .readFileSync("e_shiny_selfies.txt", "utf8")
+    .readFileSync("c_memorable_moments.txt", "utf8")
     .toString()
     .match(/^.+$/gm);
 
@@ -29,6 +29,13 @@ function solution() {
       verticals.push(_.flatten(varr));
     }
   }
+
+
+  _.shuffle(horizontals).forEach( function(val ,i){
+    slideshows += val[0]+'\n'
+    lines_count += 1
+  })
+
   let svert = _.shuffle(verticals)
 
   svert.forEach( function(val ,i){
@@ -42,17 +49,28 @@ function solution() {
     }
   })
 
-  _.shuffle(horizontals).forEach( function(val ,i){
-    slideshows += val[0]+'\n'
-    lines_count += 1
-  })
+  // var verticals_slides = []
+  // var v_used = []
+  // verticals.forEach( function(val ,i){
+  //   let tags = val.slice(3, val.length)
+  //   for (y= i + 1; y < verticals.length; y++){
+  //     let ytags = verticals[y].slice(3, verticals[y].length)
+  //     let common = _.intersection(tags, ytags);
+  //     if(common.length > 0 && !_.includes(v_used, y)){
+  //       v_used.push(y)
+  //       verticals_slides.push([val,verticals[y]])
+  //     }
+  //   }
+  // })
+
+  // console.log(verticals.length, verticals_slides.length)
 
   output = lines_count + '\n' + slideshows
 
-  console.log('---RESULT---')
-  console.log(output)
+  // console.log('---RESULT---')
+  // console.log(output)
 
-  fs.writeFile("out_example_e.txt", output, function(err) {
+  fs.writeFile("out_example_c.txt", output, function(err) {
     if(err) {
         return console.log(err);
     }
